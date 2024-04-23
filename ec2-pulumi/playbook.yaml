@@ -1,0 +1,19 @@
+---
+- hosts: ec2
+  tasks:
+    - name: Install Docker
+      yum:
+        name: docker
+        state: present
+
+    - name: Start Docker service
+      service:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Run Docker container
+      shell: >
+        docker run -d -p 80:9898 stefanprodan/podinfo
+      args:
+        executable: /bin/bash
